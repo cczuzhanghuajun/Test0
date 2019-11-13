@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>试一下</title>
+<script>
+var websocket;
+
+window.onload = function() {
+	document.getElementById("lala").innerHTML="准备就绪";
+	websocket = new WebSocket("ws://localhost:8080/Test3/websocket/test");
+	websocket.onmessage = showMessage;
+}
+
+function showMessage(event) {
+	document.getElementById("lala").innerHTML=event.data;
+}
+
+function insert() {
+	var message = "insert " + document.getElementById("name").value + " "+ document.getElementById("age").value;
+	websocket.send(message);
+}
+
+function find() {
+	var message = "find";
+	websocket.send(message);
+}
+
+</script>
+</head>
+<body>
+	<form action="form_action.asp" method="get">
+ 		姓名：<input type="text" id="name" />
+  		年龄: <input type="text" id="age" />
+  		<button type="button" onclick="insert()">提交</button>
+  		<button type="button" onclick="find()">查询</button>
+	</form>
+	<div id="lala">
+	</div>
+</body>
+</html>
